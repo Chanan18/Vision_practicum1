@@ -355,7 +355,7 @@ bool BMP::SetBitDepth( int NewDepth )
  if( NewDepth != 1 && NewDepth != 4 && 
      NewDepth != 8 && NewDepth != 16 && 
      NewDepth != 24 && NewDepth != 32 )
- {
+ { 
   if( EasyBMPwarnings )
   {
    cout << "EasyBMP Warning: User attempted to set unsupported bit depth " 

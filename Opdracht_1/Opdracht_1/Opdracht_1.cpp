@@ -19,31 +19,31 @@ int main(int argc, char* argv[])
 	//char* s = std::cin;
 
 	BMP Image;
-	Image.ReadFromFile(s);
-	int height = Image.TellHeight();
-	int width = Image.TellWidth();
+	if (Image.ReadFromFile(s)){
+		int height = Image.TellHeight();
+		int width = Image.TellWidth();
 
-	for (int x = 0; x < width; x++)
-	{
-		for (int y = 0; y < height; y++)
+		for (int x = 0; x < width; x++)
 		{
-			double Temp = 0.30*(Image(x, y)->Red) + 0.59*(Image(x, y)->Green) + 0.11*(Image(x, y)->Blue);
-			Image(x, y)->Red = (Byte)Temp;
-			Image(x, y)->Green = (Byte)Temp;
-			Image(x, y)->Blue = (Byte)Temp;
+			for (int y = 0; y < height; y++)
+			{
+				double Temp = 0.30*(Image(x, y)->Red) + 0.59*(Image(x, y)->Green) + 0.11*(Image(x, y)->Blue);
+				Image(x, y)->Red = (Byte)Temp;
+				Image(x, y)->Green = (Byte)Temp;
+				Image(x, y)->Blue = (Byte)Temp;
+			}
 		}
+
+
+
+
+		Image.SetBitDepth(8);
+		CreateGrayscaleColorTable(Image);
+		char output[30] = "grey_";
+		strcat(output, s);
+		std::cout << output << std::endl;
+		Image.WriteToFile(output);
 	}
-	
-
-
-
-	Image.SetBitDepth(8);
-	CreateGrayscaleColorTable(Image);
-	char output[30] = "grey_";
-	strcat(output, s);
-	std::cout << output << std::endl;
-	Image.WriteToFile(output);
-
 	std::cin.get();
 	return 0;
 }
