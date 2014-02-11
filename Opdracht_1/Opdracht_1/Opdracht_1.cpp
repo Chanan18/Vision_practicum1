@@ -33,10 +33,13 @@ int main(int argc, char* argv[])
 			Image(x, y)->Blue = (Byte)Temp;
 		}
 	}
+	
+
+
 
 	Image.SetBitDepth(8);
 	CreateGrayscaleColorTable(Image);
-	char output[30] = "gray_";
+	char output[30] = "grey_";
 	strcat(output, s);
 	std::cout << output << std::endl;
 	Image.WriteToFile(output);

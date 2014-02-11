@@ -361,7 +361,7 @@ bool BMP::SetBitDepth( int NewDepth )
    cout << "EasyBMP Warning: User attempted to set unsupported bit depth " 
         << NewDepth << "." << endl
         << "                 Bit depth remains unchanged at " 
-	    << BitDepth << "." << endl;
+		<< "." << endl;
   }
   return false;
  }
