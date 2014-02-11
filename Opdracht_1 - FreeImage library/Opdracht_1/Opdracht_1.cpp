@@ -45,7 +45,7 @@ int main(int argc, char* argv[])
 		strcat(output, s);
 		std::cout << output << std::endl;
 		//Image.WriteToFile(output);
-		if (FreeImage_Save(FIF_BMP, bitmap, "lol.bmp", 0)){
+		if (FreeImage_Save(FIF_BMP, bitmap, output, 0)){
 			cout << "Succesfully saved!!!!!!" << endl;
 		}
 	std::cin.get();
