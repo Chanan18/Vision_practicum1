@@ -2,16 +2,20 @@
 //
 
 #include "stdafx.h"
+#include <fstream>
 #include <iostream>
 #include <string>
 #include "FreeImage.h"
+#include "converter.h"
+#include "histogram.h"
 
 typedef unsigned char Byte;
 using namespace std;
 
 int main(int argc, char* argv[])
 {
-	
+	converter c;
+	histogram h;
 	cout << "Enter filename with max 30 characters:" << endl;
 	char s[30];
 	cin.getline(s, 30);
@@ -24,30 +28,21 @@ int main(int argc, char* argv[])
 		exit(1);
 	}
 
-	int HEIGHT = FreeImage_GetHeight(bitmap);
-	int WIDTH = FreeImage_GetWidth(bitmap);
-	double grayValue;
+	FIBITMAP* gray_bitmap = FreeImage_Clone(bitmap);
+	gray_bitmap = c.convertToGray(gray_bitmap, color);
 
-	for (int i = 0; i < WIDTH; i++) {
-		//cout << WIDTH << endl;
-		for (int j = 0; j < HEIGHT; j++) {
-			//cout << HEIGHT << endl;
-			FreeImage_GetPixelColor(bitmap, i, j, &color);
-			grayValue = (color.rgbRed * 0.30) +
-				(color.rgbGreen * 0.59) +
-				(color.rgbBlue * 0.11);
-			color.rgbRed = color.rgbGreen = color.rgbBlue = grayValue;
-			FreeImage_SetPixelColor(bitmap, i, j, &color);
-		}
+	char output[30] = "grey_";
+	strcat(output, s);
+	std::cout << output << std::endl;
+	//Image.WriteToFile(output);
+	if (FreeImage_Save(FIF_BMP, gray_bitmap, output, 0)){
+		cout << "Succesfully saved!!!!!!" << endl;
 	}
 
-		char output[30] = "grey_";
-		strcat(output, s);
-		std::cout << output << std::endl;
-		//Image.WriteToFile(output);
-		if (FreeImage_Save(FIF_BMP, bitmap, output, 0)){
-			cout << "Succesfully saved!!!!!!" << endl;
-		}
+	h.createHistogram256(gray_bitmap);
+	h.createHistogram10(gray_bitmap);
+
 	std::cin.get();
 	return 0;
 }
+
